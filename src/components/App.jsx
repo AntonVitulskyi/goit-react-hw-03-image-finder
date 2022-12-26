@@ -1,18 +1,22 @@
 import { Component } from 'react';
-import Container from './Container/Container';
+import { ImageGallery } from './ImageGallery/ImageGallery';
+import { Searchbar } from './Searchbar/Searchbar';
+import {PixabayApi} from '../pixabay-api'
+import Button from './Button/Button';
 
 export class App extends Component {
   state = {
-    contacts: [],
-    filter: '',
+    inputQuery: '',
   };
-
 
   render() {
     return (
-        <Container>
+<>
+<Searchbar />
+<ImageGallery/>
+<Button/>
 
-        </Container>
+</>
     );
   }
 }
