@@ -19,7 +19,6 @@ export class App extends Component {
       Loading.dots();
       getImages(this.state.inputQuery)
         .then(data => {
-          console.log(data);
           if (data.hits.length === 0) {
             Notify.info('За цим пошуком нічого не знайдено!');
           }

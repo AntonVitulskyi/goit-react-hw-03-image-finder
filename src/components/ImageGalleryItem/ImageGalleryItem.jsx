@@ -24,7 +24,7 @@ export default class ImageGalleryItem extends Component {
       }
     });
     window.addEventListener('click', event => {
-      if (event.target.className === 'styles_Overlay__pZRPG') {
+      if (event.target.dataset.name === 'Overlay') {
         this.onClickCloseModal();
       }
     });

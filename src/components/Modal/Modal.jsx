@@ -4,7 +4,7 @@ import styles from '../../styles.module.css';
 
 export default function Modal({ largeImageURL }) {
   return (
-    <div className={styles.Overlay}>
+    <div data-name='Overlay' className={styles.Overlay}>
       <div className={styles.Modal}>
         <img src={largeImageURL} alt="" />
       </div>
