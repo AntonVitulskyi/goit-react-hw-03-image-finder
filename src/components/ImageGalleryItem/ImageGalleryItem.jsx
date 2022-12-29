@@ -1,24 +1,60 @@
 import PropTypes from 'prop-types';
-import * as basicLightbox from 'basiclightbox'
-import styles from '../../styles.module.css'
+import styles from '../../styles.module.css';
+
+import { Component } from 'react';
 import Modal from 'components/Modal/Modal';
 
-export default function ImageGalleryItem({id, webformatURL, largeImageURL}) {
+export default class ImageGalleryItem extends Component {
+  state = {
+    modalIsOpen: false,
+  };
 
-const openModal = () => {
-  basicLightbox.create(`
-  <div className=${styles.Overlay}>
-  <div className=${styles.Modal}>
-    <img src=${largeImageURL} width="800px" height="600px" alt="" />
-  </div>
-</div>
-`).show()
+  onClickOpenModal = () => {
+    this.setState({ modalIsOpen: true });
+  };
 
+  onClickCloseModal = () => {
+    this.setState({ modalIsOpen: false });
+  };
+
+  componentDidMount() {
+    window.addEventListener('keydown', e => {
+      if (e.code === 'Escape') {
+        this.onClickCloseModal();
+      }
+    });
+    window.addEventListener('click', event => {
+      if (event.target.className === 'styles_Overlay__pZRPG') {
+        this.onClickCloseModal();
+      }
+    });
+  }
+
+  render() {
+    const { largeImageURL, webformatURL } = this.props;
+    return (
+      <>
+        <li onClick={this.onClickOpenModal} className={styles.ImageGalleryItem}>
+          <img
+            className={styles.ImageGalleryItemImage}
+            data-bigimage={largeImageURL}
+            src={webformatURL}
+            alt=""
+          />
+        </li>
+        {this.state.modalIsOpen && (
+          <Modal
+            onClickCloseModal={this.onClickCloseModal}
+            largeImageURL={largeImageURL}
+          />
+        )}
+      </>
+    );
+  }
 }
 
-  return (
-    <li onClick={openModal} className={styles.ImageGalleryItem}>
-      <img className={styles.ImageGalleryItemImage} data-bigimage={largeImageURL} src={webformatURL} alt="" />
-    </li>
-  );
+ImageGalleryItem.propTypes = {
+  largeImageURL: PropTypes.string,
+  webformatURL: PropTypes.string,
+  id: PropTypes.number
 }

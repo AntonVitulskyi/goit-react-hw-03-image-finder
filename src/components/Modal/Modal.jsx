@@ -1,19 +1,17 @@
-// import PropTypes from 'prop-types';
-// import * as basicLightbox from 'basiclightbox'
-// import styles from '../../styles.module.css'
-// import { Component } from 'react';
+import PropTypes from 'prop-types';
 
-// export default class Modal extends Component() {
-// state = {
-//     modalIsOpen: false,
-// }
+import styles from '../../styles.module.css';
 
-// render(){
-//   return ( 
-//  this.state.modalIsOpen ? <div className={styles.Overlay}>
-//     <div className={styles.Modal}>
-//       <img src={this.props.largeImageURL} alt="" />
-//     </div>
-//   </div> : null
-//   )
-// }}
+export default function Modal({ largeImageURL }) {
+  return (
+    <div className={styles.Overlay}>
+      <div className={styles.Modal}>
+        <img src={largeImageURL} alt="" />
+      </div>
+    </div>
+  );
+}
+
+Modal.propTypes = {
+  largeImageURL: PropTypes.string,
+};

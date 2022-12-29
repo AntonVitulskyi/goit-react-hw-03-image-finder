@@ -14,12 +14,12 @@ export class App extends Component {
     currentPage: 1,
   };
 
-
   componentDidUpdate(prevProps, prevState) {
     if (prevState.inputQuery !== this.state.inputQuery) {
       Loading.dots();
       getImages(this.state.inputQuery)
         .then(data => {
+          console.log(data);
           if (data.hits.length === 0) {
             Notify.info('За цим пошуком нічого не знайдено!');
           }
@@ -46,7 +46,6 @@ export class App extends Component {
   }
 
   onButtonLoadMore = () => {
-    console.log(this.state.dataInfo);
     this.setState(prevState => {
       return {
         currentPage: prevState.currentPage + 1,
