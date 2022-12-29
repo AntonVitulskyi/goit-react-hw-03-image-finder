@@ -2,8 +2,8 @@
 
 import styles from '../../styles.module.css'
 
-export default function Button({}) {
+export default function Button({onButtonLoadMore, foundImages}) {
   return (
-<button type='button' className={styles.Button}>Load more</button>
+<button onClick={onButtonLoadMore} type='button' className={styles.Button}>Load more</button>
   );
 }

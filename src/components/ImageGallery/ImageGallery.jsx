@@ -1,3 +1,4 @@
+
 import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 import { Component } from 'react';
 import styles from '../../styles.module.css'
@@ -6,10 +7,20 @@ import styles from '../../styles.module.css'
 export class ImageGallery extends Component {
   state = {};
 
-  render() {
+  render() 
+  
+  {
     return <ul className={styles.ImageGallery}>
-    <ImageGalleryItem/>
-
-    </ul>;
+     { this.props.foundImages.map(image => (
+    <ImageGalleryItem
+    key={image.id}
+    largeImageURL={image.largeImageURL}
+    webformatURL={image.webformatURL}
+    id={image.id}
+    />
+     ))
+    
+     }
+    </ul>
   }
 }
