@@ -30,6 +30,11 @@ export default class ImageGalleryItem extends Component {
     });
   }
 
+  componentWillUnmount() {
+    document.removeEventListener("click",  window);
+    document.removeEventListener("keydown",  window);
+}
+
   render() {
     const { largeImageURL, webformatURL } = this.props;
     return (
