@@ -5,26 +5,32 @@ import styles from '../../styles.module.css';
 
 export default class Modal extends Component {
   componentDidMount() {
-    window.addEventListener('keydown', e => {
-      if (e.code === 'Escape') {
-        this.props.onClickCloseModal();
-      }
-    });
-    window.addEventListener('click', event => {
-      if (event.target.dataset.name === 'Overlay') {
-        this.props.onClickCloseModal();
-      }
-    });
+    window.addEventListener('keydown', this.onKeyDown);
   }
 
+  onKeyDown = e => {
+    if (e.code === 'Escape') {
+      this.props.onClickCloseModal();
+    }
+  };
+
+  onOverlayClick = event => {
+    if (event.target.dataset.name === 'Overlay') {
+      this.props.onClickCloseModal();
+    }
+  };
+
   componentWillUnmount() {
-    document.removeEventListener('click', window);
-    document.removeEventListener('keydown', window);
+    window.removeEventListener('keydown', this.onKeyDown);
   }
 
   render() {
     return (
-      <div data-name="Overlay" className={styles.Overlay}>
+      <div
+        onClick={this.onOverlayClick}
+        data-name="Overlay"
+        className={styles.Overlay}
+      >
         <div className={styles.Modal}>
           <img src={this.props.modalImage} alt="" />
         </div>
@@ -35,5 +41,5 @@ export default class Modal extends Component {
 
 Modal.propTypes = {
   modalImage: PropTypes.string,
-  onClickCloseModal: PropTypes.func
+  onClickCloseModal: PropTypes.func,
 };
