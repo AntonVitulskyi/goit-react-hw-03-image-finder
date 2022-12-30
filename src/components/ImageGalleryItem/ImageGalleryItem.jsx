@@ -1,45 +1,14 @@
 import PropTypes from 'prop-types';
 import styles from '../../styles.module.css';
-
 import { Component } from 'react';
-import Modal from 'components/Modal/Modal';
 
 export default class ImageGalleryItem extends Component {
-  state = {
-    modalIsOpen: false,
-  };
-
-  onClickOpenModal = () => {
-    this.setState({ modalIsOpen: true });
-  };
-
-  onClickCloseModal = () => {
-    this.setState({ modalIsOpen: false });
-  };
-
-  componentDidMount() {
-    window.addEventListener('keydown', e => {
-      if (e.code === 'Escape') {
-        this.onClickCloseModal();
-      }
-    });
-    window.addEventListener('click', event => {
-      if (event.target.dataset.name === 'Overlay') {
-        this.onClickCloseModal();
-      }
-    });
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener("click",  window);
-    document.removeEventListener("keydown",  window);
-}
 
   render() {
     const { largeImageURL, webformatURL } = this.props;
     return (
       <>
-        <li onClick={this.onClickOpenModal} className={styles.ImageGalleryItem}>
+        <li className={styles.ImageGalleryItem}>
           <img
             className={styles.ImageGalleryItemImage}
             data-bigimage={largeImageURL}
@@ -47,12 +16,6 @@ export default class ImageGalleryItem extends Component {
             alt=""
           />
         </li>
-        {this.state.modalIsOpen && (
-          <Modal
-            onClickCloseModal={this.onClickCloseModal}
-            largeImageURL={largeImageURL}
-          />
-        )}
       </>
     );
   }

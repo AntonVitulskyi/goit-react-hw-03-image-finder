@@ -8,14 +8,17 @@ import { getImages } from '../pixabay-api';
 
 export class App extends Component {
   state = {
-    dataInfo: null,
+    maxPage: null,
     inputQuery: '',
     foundImages: [],
     currentPage: 1,
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.inputQuery !== this.state.inputQuery) {
+    if (
+      prevState.inputQuery !== this.state.inputQuery &&
+      prevState.currentPage === this.state.currentPage
+    ) {
       Loading.dots();
       getImages(this.state.inputQuery)
         .then(data => {
@@ -24,7 +27,7 @@ export class App extends Component {
           }
           this.setState({
             foundImages: data.hits,
-            dataInfo: Math.ceil(data.totalHits / 12),
+            maxPage: Math.ceil(data.totalHits / 12),
           });
         })
         .finally(() => Loading.remove());
@@ -37,6 +40,7 @@ export class App extends Component {
             return {
               foundImages: [...prevState.foundImages, ...data.hits],
               isLoading: true,
+              maxPage: Math.ceil(data.totalHits / 12),
             };
           });
         })
@@ -53,6 +57,9 @@ export class App extends Component {
   };
 
   onSumbitSearch = searchWord => {
+    if (searchWord.trim() === this.state.inputQuery) {
+      return;
+    }
     if (searchWord.trim() === '') {
       return Notify.info('Введіть запит для пошуку!');
     }
@@ -60,12 +67,12 @@ export class App extends Component {
   };
 
   render() {
-    const { foundImages, dataInfo, currentPage } = this.state;
+    const { foundImages, maxPage, currentPage } = this.state;
     return (
       <>
         <Searchbar onSumbitSearch={this.onSumbitSearch} />
         <ImageGallery foundImages={foundImages} />
-        {foundImages.length === 0 || dataInfo === currentPage ? null : (
+        {foundImages.length === 0 || maxPage === currentPage ? null : (
           <Button
             foundImages={foundImages}
             onButtonLoadMore={this.onButtonLoadMore}
